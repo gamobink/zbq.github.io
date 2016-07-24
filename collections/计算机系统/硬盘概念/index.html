@@ -1,55 +1,56 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-    <title>���̸���</title>
+    <meta charset="UTF-8"/>
+    <title>磁盘概念</title>
 </head>
 <body>
-    <h1>��Ƭ�ṹ</h1>
+    <h1>盘片结构</h1>
     <p>
     <img style="display: block; margin-left: auto; margin-right: auto;" src="panpian.gif" alt="" />
-    <p style="text-align: center;"><strong>ͼ1 ��Ƭ�ṹ</strong></p>
-    ͼ1�е�һȦȦ��ɫͬ��ԲΪһ�����ŵ�����Բ�����⻭ֱ�ߣ����Խ��ŵ�����Ϊ���ɸ����Σ�ÿ���ŵ���һ�����α���֮Ϊһ��������ͼ����ɫ���֣��������Ǵ��̵���С��ɵ�Ԫ��ͨ����512�ֽڡ�
+    <p style="text-align: center;"><strong>图1 盘片结构</strong></p>
+    图1中的一圈圈灰色同心圆为一条条磁道，从圆心向外画直线，可以将磁道划分为若干个弧段，每个磁道上一个弧段被称之为一个扇区（图中绿色部分）。扇区是磁盘的最小组成单元，通常是512字节。
     </p>
     <p>&nbsp;</p>
 
 
-    <h1>��������ṹ</h1>
+    <h1>磁盘整体结构</h1>
     <p>
     <img style="display: block; margin-left: auto; margin-right: auto;" src="zhengti.gif" alt="" />
-    <p style="text-align: center;"><strong>ͼ2 ����ṹ</strong></p>
-    ͼ2չʾ����һ������Ƭ��ɵĴ�������ṹ��һ����Ƭ�������涼�ǿɶ�д�ģ�ͼ����ɫ���ֽ����棨cylinder����
+    <p style="text-align: center;"><strong>图2 整体结构</strong></p>
+    图2展示了由一个个盘片组成的磁盘立体结构，一个盘片上下两面都是可读写的，图中蓝色部分叫柱面（cylinder）。
     </p>
     <p>&nbsp;</p>
 
 
-    <h1>���̵ĳ�������</h1>
+    <h1>磁盘的常见参数</h1>
     <ul>
-        <li><strong>��ͷ��head��</strong></li>
-        <li><strong>�ŵ���track��</strong></li>
-        <li><strong>���棨cylinder��</strong></li>
-        <li><strong>������sector��</strong></li>
-        <li><strong>Բ�̣�platter��</strong></li>
+        <li><strong>磁头（head）</strong></li>
+        <li><strong>磁道（track）</strong></li>
+        <li><strong>柱面（cylinder）</strong></li>
+        <li><strong>扇区（sector）</strong></li>
+        <li><strong>圆盘（platter）</strong></li>
     </ul>
-    <p>ͼ2�д�����һ�� 3��Բ��6����ͷ��7�����棨ÿ����Ƭ7���ŵ��� �Ĵ��̣�ͼ2��ÿ���ŵ���12�����������Դ˴��̵�����Ϊ6*7*12*512�ֽڡ�</p>
-    <p>����</p>
-    <p><strong>&nbsp;&nbsp;&nbsp;&nbsp; �������� �� ��ͷ�� &times; ÿ�������� &times; ÿ�����ֽ���</strong></p>
-    <p><strong>&nbsp;&nbsp;&nbsp;&nbsp; �������� �� �������� &times; �ŵ�(����)��</strong></p>
+    <p>图2中磁盘是一个 3个圆盘6个磁头，7个柱面（每个盘片7个磁道） 的磁盘，图2中每条磁道有12个扇区，所以此磁盘的容量为6*7*12*512字节。</p>
+    <p>即：</p>
+    <p><strong>&nbsp;&nbsp;&nbsp;&nbsp; 柱面容量 ＝ 磁头数 &times; 每道扇区数 &times; 每扇区字节数</strong></p>
+    <p><strong>&nbsp;&nbsp;&nbsp;&nbsp; 磁盘容量 ＝ 柱面容量 &times; 磁道(柱面)数</strong></p>
     <p>&nbsp;</p>
 
 
-    <p>����ʽ�����У����ܴŵ��ܳ���ͬ����ÿ���ŵ��ϵ�����������ȵģ�Խ��Բ����������Խ�̣�����洢�ܶ�Խ�ߡ��������ַ�ʽ��Ȼ�Ƚ��˷ѿռ䣬����ִ��������Ϊ���ܶȽṹ������ζ����Χ�ŵ��ϵ���������Ҫ������Ȧ�Ĵŵ���Ѱַ��ʽҲ��Ϊ������Ϊ��λ������Ѱַ��Ϊ�˼�����ʽ��3DѰַ��ʽ���ִ����̿������ж���һ����ַ�������� 3D Ѱַ��������Ϊ���Բ�����</p>
+    <p>在老式磁盘中，尽管磁道周长不同，但每个磁道上的扇区数是相等的，越往圆心扇区弧段越短，但其存储密度越高。不过这种方式显然比较浪费空间，因此现代磁盘则改为等密度结构，这意味着外围磁道上的扇区数量要大于内圈的磁道，寻址方式也改为以扇区为单位的线性寻址。为了兼容老式的3D寻址方式，现代磁盘控制器中都有一个地址翻译器将 3D 寻址参数翻译为线性参数。</p>
     <p>&nbsp;</p>
 
-    <h1>fdisk -l �鿴�������</h1>
+    <h1>fdisk -l 查看分区情况</h1>
     <p>&nbsp;<img style="display: block; margin-left: auto; margin-right: auto;" src="fdisk-2.17.2.png" alt="" /></p>
-    <p style="text-align: center;">&nbsp;<strong>ͼ3 fdisk 2.17.2��</strong></p>
+    <p style="text-align: center;">&nbsp;<strong>图3 fdisk 2.17.2版</strong></p>
 
     <p>&nbsp;<img style="display: block; margin-left: auto; margin-right: auto;" src="fdisk-2.25.2.png" alt="" /></p>
-    <p style="text-align: center;">&nbsp;<strong>ͼ4 fdisk 2.25.2��</strong></p>
-    <p>&nbsp;ͼ3��������ΪUnit��ʾ��һ��������Ϣ��ͼ4��������ΪUnit��ʾ��һ��������Ϣ������ͨ�������в���-u=sectors��-u=cylinders�������ַ�ʽ��ʾ��
-    �����Ƿ�������С��λ������ͼ��ʾ��������СΪ2������</p>
+    <p style="text-align: center;">&nbsp;<strong>图4 fdisk 2.25.2版</strong></p>
+    <p>&nbsp;图3是以柱面为Unit显示的一个分区信息，图4是以扇区为Unit显示的一个分区信息，可以通过命令行参数-u=sectors，-u=cylinders来以两种方式显示。
+    扇区是分区的最小单位，如下图所示，分区大小为2个扇区</p>
     <p>&nbsp;<img style="display: block; margin-left: auto; margin-right: auto;" src="fdisk-sector-cylinder.png" alt="" /></p>
-    <p style="text-align: center;">&nbsp;<strong>ͼ5 ��sector��cylinderΪ��λ�ķ�����Ϣ</strong></p>
+    <p style="text-align: center;">&nbsp;<strong>图5 以sector或cylinder为单位的分区信息</strong></p>
 </body>
 </html>
 
